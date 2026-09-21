@@ -104,6 +104,22 @@ sources:
 YAML
 fi
 
+# `dct init` scaffolds charts/meta.yml as comments only. A comments-only YAML
+# file parses to None, and 0.8.0's meta lookup has no guard for that, so every
+# render of every board in the project dies on an uncaught
+# ParseError("Empty YAML document") from _charts_meta_default_source.
+# One real key is enough to clear it. `source:` is the honest one to use: it is
+# the directory default a board inherits when it does not name a source itself,
+# which is exactly what module 1 asks you to try. Boards that set `source:`
+# themselves override it, so this changes nothing about what they render.
+mkdir -p charts
+if ! grep -q "^source:" charts/meta.yml 2>/dev/null; then
+  cat >> charts/meta.yml <<'YAML'
+
+source: jaffle
+YAML
+fi
+
 echo "5/5 Link lesson boards into the lab"
 link_dir "$ROOT/boards" "$LAB/charts/lessons"
 dct validate charts/lessons/ || true

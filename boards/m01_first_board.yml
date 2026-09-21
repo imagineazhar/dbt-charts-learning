@@ -36,8 +36,7 @@ charts:
 
 rows:
   - text: |
-      Two charts, two queries, one layout. Notes for this module live in
-      `notes/m01-board-anatomy.md`.
+      Two charts, two queries, one layout.
   - cols:
       - weekly_orders
       - status_mix

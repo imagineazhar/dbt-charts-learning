@@ -1,45 +1,105 @@
 # Learning log
 
-Newest first. One entry per session. Keep entries short; the module notes hold the detail.
+What I learned about charts and boards, newest first. One entry per session,
+kept short; the module notes hold the detail.
+
+This log is about dbt Charts only. Environment and tooling problems go in
+`TROUBLESHOOTING.md` instead, so that this file stays readable as a record of
+what I actually learned about building boards.
 
 Entry format:
 
 ```
-## YYYY-MM-DD · dct x.y.z · Module N
+## YYYY-MM-DD · dct x.y.z · Topic
 Did:
-Broke / confused me:
+Surprised me:
 Changed my understanding:
 Post material:
 ```
 
 ---
 
-## 2026-09-21 · dct 0.8.0 · KPI tone and percent_delta
+## 2026-09-21 · dct 0.8.0 · A board's text block is part of the board
 
-Did: read the `boards/kpi-overview` specimen from `dct examples`, then rendered a throwaway board to SVG to test `format: percent_delta` against positive, negative and zero deltas.
+Did: removed a line from the first board's text block that pointed at a file in
+this repo, and re-rendered.
 
-Broke / confused me: the specimen hardcodes `glyph: "▲"` and `tone: positive` on the KPI support row. Both are static — the field reference types `glyph` as `str` and `tone` as an enum (`positive | negative | warning | info`), and only `value` takes a column reference. Point that at live data and the card stays green with an up arrow after the number turns negative. It reads as correct because the specimen's inline `revenue_delta` is frozen at `+0.124`.
+Surprised me: nothing technical, but it is a useful reminder. A board's `text:`
+block is published output, not a code comment. Anything written there shows up
+in the PNG, the PDF and the served page. Notes to myself do not belong in it.
 
-Changed my understanding: the number and the colour have different honesty guarantees. `percent_delta` is sign-aware — `0.124` renders `+12.4%`, `-0.031` renders `−3.1%`, and that minus is U+2212, not an ASCII hyphen. Zero renders `+0.0%`. But with `tone:` unset every text fill stays grey; dct never infers tone from the sign, and 0.8.0 has no conditional form. So the figure tells the truth on its own and the colour only tells the truth if you hardcode it correctly and the sign never flips.
+Changed my understanding: the board file is the deliverable. There is no
+separate "presentation layer" where the audience-facing wording lives, so every
+line of the file is either something a reader sees or something that shapes what
+they see.
 
-Post material: a shipped specimen that is correct as published and misleading the moment real data arrives — the strongest version of "the chart is right, the picture is wrong" for P1. The U+2212 minus is a footnote worth keeping for anyone asserting on rendered output.
+Post material: worth one sentence in P1 when the layout section introduces
+`text:` blocks.
 
-## 2026-09-21 · dct 0.8.0 · Repo setup
+## 2026-09-21 · dct 0.8.0 · KPI cards: the number is honest, the colour is not
 
-Did: published the repo. `git init` on `main`, initial commit, public at `github.com/imagineazhar/dbt-charts-learning`. Added `.gitattributes` pinning `eol=lf`. Cleared a stray `jaffle_shop/` and `logs/` from the repo root.
+Did: read the `kpi-overview` example from `dct examples`, then built a throwaway
+board to see how a KPI card behaves when its number is positive, negative and
+zero.
 
-Broke / confused me: that stray `jaffle_shop/` was `dbt init` run from the repo root, which hit the global dbt-fusion 2.0 binary instead of the venv. Fusion scaffolds its own newer jaffle shop — marts, macros, four extra seeds — so the root held a second, different jaffle shop shadowing the pinned `36bde6c` clone. Activate the venv before any dbt command.
+Surprised me: on a KPI card, the number updates with the data and the colour
+does not. The up-arrow and the green are fixed values you type into the board.
+Point that card at live data and it stays green with an arrow pointing up after
+the number goes negative. The published example looks correct only because its
+number never changes.
 
-Changed my understanding: dct variables interpolate as bare `{{ region }}`, no `variables.` prefix — not dbt's `{{ var('region') }}`. Same Jinja braces, different resolution. (From `dct docs cheatsheet`; not yet exercised on a board.)
+Changed my understanding: the number and the colour have different guarantees.
+The percentage formatting is aware of the sign and always renders it correctly.
+The colour is whatever you wrote, and dct 0.8.0 will not derive it from the
+number. So a card can be arithmetically right and visually wrong at the same
+time.
 
-Post material: two jaffle shops on one machine and how to tell them apart. Also `core.autocrlf=true` handing Windows readers a CRLF `setup.sh` that Git Bash rejects — the first command the README tells them to run. And the shell the docs forgot to name: `setup.sh` junctions `.venv/bin` to `.venv/Scripts` so Git Bash works on Windows, but the same activate line still fails in PowerShell, which the README never mentioned.
+Post material: the clearest example so far of a chart that is correct and
+misleading. Belongs wherever KPI cards are introduced.
 
-## 2026-09-21 · dct 0.8.0 · Setup and module 1 board
+## 2026-09-21 · dct 0.8.0 · Validation reads your dbt models
 
-Did: scaffolded the project. `setup.sh` runs clean from a fresh copy: venv, jaffle shop at commit `36bde6c`, `dbt build` (28 passed), `dct init`, source `jaffle` registered from the dbt profile, `boards/` linked into the lab. First board (`m01_first_board.yml`) validates, renders to PNG, and serves at `/lessons/m01_first_board/`.
+Did: built the first board — two queries against `orders`, a line chart and a
+bar chart side by side — and validated it.
 
-Broke / confused me: `dct validate` raises `WARN-DBT-MODEL-COLUMNS-UNRESOLVED` on both queries. The jaffle `orders` model ends in `select *`, so dct can't derive its columns statically. `--warehouse` doesn't clear it either.
+Surprised me: `WARN-DBT-MODEL-COLUMNS-UNRESOLVED` on both queries. dbt's
+`orders` model ends in `select *`, so dct cannot work out which columns it
+produces, and therefore cannot confirm that the columns my charts reference
+actually exist. The warning says the check was skipped; it does not say anything
+is wrong.
 
-Changed my understanding: validation reads the dbt model SQL to check column references before anything runs. Model style (explicit projections) now affects dashboard safety.
+Changed my understanding: validation reads the SQL of the dbt models a board
+depends on, before running anything. That makes model style a dashboard concern.
+A model that ends in `select *` is a model whose dashboards cannot be checked
+ahead of time.
 
-Post material: the partial final week (9 April) drags the weekly line to 1. Correct chart, misleading picture. Good opener for P1 on where fixes belong.
+Post material: the warning itself, and the wider point that a board is validated
+against models rather than against tables.
+
+## 2026-09-21 · dct 0.8.0 · A correct chart that misleads
+
+Did: looked properly at the weekly orders line on the first board.
+
+Surprised me: the last point drops from around eight to one. Nothing is broken.
+The data ends on 9 April, mid-week, so the final bucket holds one day and is
+drawn the same width as every full week before it.
+
+Changed my understanding: the fix belongs in the query, not the chart. Filtering
+the partial week out in SQL means the reason is written down in the board file,
+where a reviewer can see it and disagree. Hiding it in a chart setting would
+make the same correction invisible.
+
+Post material: the opening of P1. It sets up the whole series in one picture.
+
+## 2026-09-21 · dct 0.8.0 · Variables use plain braces
+
+Did: read `dct docs cheatsheet` while setting up.
+
+Surprised me: dct variables are written `{{ region }}`, not dbt's
+`{{ var('region') }}`. Same braces, different rules.
+
+Changed my understanding: a board file looks like dbt YAML and is not dbt YAML.
+Worth checking the dct reference rather than assuming dbt behaviour carries
+over. Not yet tried on a real board.
+
+Post material: a short warning in P4, where variables are introduced.
