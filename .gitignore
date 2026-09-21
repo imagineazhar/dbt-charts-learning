@@ -1,0 +1,7 @@
+.venv/
+lab/jaffle_shop/
+logs/
+*.duckdb
+*.duckdb.wal
+__pycache__/
+.DS_Store

@@ -1,0 +1,43 @@
+title: "Module 1: first board on jaffle shop"
+
+queries:
+  orders_by_week:
+    sql: |
+      SELECT date_trunc('week', order_date) AS week,
+             COUNT(*) AS orders,
+             SUM(amount) AS revenue
+      FROM {{ ref('orders') }}
+      GROUP BY 1
+      ORDER BY 1
+    source: jaffle
+
+  orders_by_status:
+    sql: |
+      SELECT status, COUNT(*) AS orders
+      FROM {{ ref('orders') }}
+      GROUP BY 1
+      ORDER BY 2 DESC
+    source: jaffle
+
+charts:
+  weekly_orders:
+    query: orders_by_week
+    type: line
+    title: "Orders per week"
+    x: week
+    y: orders
+
+  status_mix:
+    query: orders_by_status
+    type: bar
+    title: "Orders by status"
+    x: status
+    y: orders
+
+rows:
+  - text: |
+      Two charts, two queries, one layout. Notes for this module live in
+      `notes/m01-board-anatomy.md`.
+  - cols:
+      - weekly_orders
+      - status_mix
