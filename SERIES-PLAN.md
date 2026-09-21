@@ -18,7 +18,7 @@ Primary: analytics engineers who already use dbt and build dashboards in Tableau
 
 | # | Working title | Type | Modules | Board / artefact | Status |
 |---|---|---|---|---|---|
-| P1 | What dbt Charts is, and my first board in 20 minutes | Tutorial + framing | 0, 1 | `m01_first_board.yml` | Not started |
+| P1 | What dbt Charts is, and your first board | Tutorial + framing | 0, 1 | `m01_first_board.yml` | Drafting |
 | P2 | Sixteen chart types, and the shapes that aren't types | Tutorial | 2, 3 | `m02`, `m03` | Not started |
 | P3 | Laying out a board: rows, cols, tabs, grid | Tutorial | 4 | `m04_layouts.yml` | Not started |
 | P4 | Filters you can read: variables wired into SQL | Tutorial | 5 | `m05_filters.yml` | Not started |
@@ -37,9 +37,26 @@ Status values: Not started → Modules done → Drafting → Edited → Publishe
 - Version line at the top: `Written against dct 0.8.0`.
 - Link to the board file at a tagged commit so readers get the exact code.
 - At least one rendered visual from `assets/renders/`.
-- One thing that went wrong, from the log, with the verbatim error code where there was one.
+- One real dct message, quoted, and what it means — chosen for what it teaches about boards.
 - Tableau comparison where it clarifies; skip it where it doesn't.
 - No claims about planned features beyond linking the upstream issue.
+
+## What goes in a post, and what does not
+
+The posts teach dbt Charts. Nothing else earns space in them.
+
+In the post: boards, queries, charts, layout, dct's own messages, the tool's
+limits, and the decisions behind a dashboard.
+
+In the repo, linked rather than explained: installation, operating system
+differences, shell problems, version pinning, and anything else about getting
+a machine ready. `README.md` and `TROUBLESHOOTING.md` carry that load, which
+keeps a reader who is already set up moving.
+
+Writing rules are in `drafts/_post-template.md`. The short version: one idea
+per paragraph, concrete thing before the explanation, define a term or drop it,
+skimmable headings, and 1,200 to 1,600 words. A post running long usually means
+something belongs in the repo or in a later post.
 
 ## Distribution
 

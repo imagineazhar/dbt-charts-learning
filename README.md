@@ -44,7 +44,9 @@ root that needs no activation:
 .\dct docs cheatsheet
 ```
 
-`setup.sh` creates a virtualenv, clones dbt's jaffle shop at the pinned commit, runs `dbt build` into a local DuckDB file, runs `dct init`, registers the dbt profile as a source named `jaffle`, and symlinks `boards/` into the lab as `charts/lessons/`. Boards stay in this repo; the lab is disposable and git-ignored. Delete `lab/jaffle_shop/` and re-run the script to reset.
+`setup.sh` creates a virtualenv, clones dbt's jaffle shop at the pinned commit, runs `dbt build` into a local DuckDB file, runs `dct init`, registers the dbt profile as a source named `jaffle`, writes `source: jaffle` into `charts/meta.yml` as the directory default, and symlinks `boards/` into the lab as `charts/lessons/`. Boards stay in this repo; the lab is disposable and git-ignored. Delete `lab/jaffle_shop/` and re-run the script to reset.
+
+That `meta.yml` line is a workaround, not a preference: `dct init` scaffolds the file as comments only, which parses to nothing, and dct 0.8.0 then fails every render in the project with an uncaught `ParseError: Empty YAML document`. One real key clears it.
 
 Validate and render from inside `lab/jaffle_shop`:
 
@@ -58,7 +60,8 @@ dct render charts/lessons/m01_first_board.yml --format png --output ../../assets
 ```
 CURRICULUM.md      Modules, exercises, and the board each one produces
 SERIES-PLAN.md     Blog and tutorial series: posts, angles, status
-LEARNING-LOG.md    Dated entries: what I tried, what broke, what surprised me
+LEARNING-LOG.md    What I learned about charts and boards, newest first
+TROUBLESHOOTING.md Environment and tooling problems, with fixes
 setup.sh           Rebuilds the lab from scratch
 boards/            Lesson boards (m01_*.yml, m02_*.yml …), tracked in git
 notes/             One note per module, written while working
@@ -72,8 +75,8 @@ lab/               Disposable dbt + DuckDB project (git-ignored)
 1. Pick the next module in `CURRICULUM.md`.
 2. Build the module's board in `boards/`. Validate, serve, render.
 3. Write the module note in `notes/` as you go, from `notes/_module-template.md`. Record errors verbatim; the `dct` error codes (`ERR-…`, `WARN-…`) are useful in posts.
-4. Add a log entry with the date, the `dct` version, and one line on what changed in your understanding.
-5. When a series post's modules are done, start its draft from `drafts/_post-template.md` and update `SERIES-PLAN.md`.
+4. Add a log entry with the date, the `dct` version, and one line on what changed in your understanding. `LEARNING-LOG.md` is for charts and boards only — anything about installation, shells or the operating system goes in `TROUBLESHOOTING.md` instead, so the log stays a record of what you learned rather than what you fought.
+5. When a series post's modules are done, start its draft from `drafts/_post-template.md` and update `SERIES-PLAN.md`. The template opens with the writing rules; posts teach dbt Charts and link here for everything else.
 
 ## Data
 
