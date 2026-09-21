@@ -36,7 +36,13 @@ cd lab\jaffle_shop; dct serve
 ```
 
 Without activating, `dct` is not on PATH and PowerShell reports
-`dct is not recognized`.
+`dct is not recognized`. For one-off commands there is a shim at the repo
+root that needs no activation:
+
+```powershell
+.\dct examples
+.\dct docs cheatsheet
+```
 
 `setup.sh` creates a virtualenv, clones dbt's jaffle shop at the pinned commit, runs `dbt build` into a local DuckDB file, runs `dct init`, registers the dbt profile as a source named `jaffle`, and symlinks `boards/` into the lab as `charts/lessons/`. Boards stay in this repo; the lab is disposable and git-ignored. Delete `lab/jaffle_shop/` and re-run the script to reset.
 
