@@ -25,6 +25,19 @@ source .venv/bin/activate
 cd lab/jaffle_shop && dct serve
 ```
 
+That block assumes bash, zsh, or Git Bash on Windows — `setup.sh` junctions
+`.venv/bin` to `.venv/Scripts` so the same activate line works there. From
+PowerShell, use the native equivalents instead:
+
+```powershell
+bash ./setup.sh
+.\.venv\Scripts\Activate.ps1
+cd lab\jaffle_shop; dct serve
+```
+
+Without activating, `dct` is not on PATH and PowerShell reports
+`dct is not recognized`.
+
 `setup.sh` creates a virtualenv, clones dbt's jaffle shop at the pinned commit, runs `dbt build` into a local DuckDB file, runs `dct init`, registers the dbt profile as a source named `jaffle`, and symlinks `boards/` into the lab as `charts/lessons/`. Boards stay in this repo; the lab is disposable and git-ignored. Delete `lab/jaffle_shop/` and re-run the script to reset.
 
 Validate and render from inside `lab/jaffle_shop`:

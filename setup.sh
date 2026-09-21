@@ -110,8 +110,9 @@ dct validate charts/lessons/ || true
 
 cat <<MSG
 
-Lab ready.
-  source .venv/bin/activate
+Lab ready. Activate the venv, then serve:
+  source .venv/bin/activate       # bash / zsh / Git Bash
+  .\.venv\Scripts\Activate.ps1     # PowerShell
   cd lab/jaffle_shop && dct serve
 Lesson boards: open the URL dct serve prints, then /lessons/<board-name>/
 MSG
