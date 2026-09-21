@@ -1,0 +1,9 @@
+# Normalise text to LF in the repo and on checkout, overriding core.autocrlf.
+# Without this, Windows clones get a CRLF setup.sh that Git Bash refuses to run.
+* text=auto eol=lf
+
+# Shell scripts are LF, always.
+*.sh text eol=lf
+
+# Binary assets, never normalised.
+*.png binary
