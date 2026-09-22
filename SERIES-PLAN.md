@@ -18,7 +18,7 @@ Primary: analytics engineers who already use dbt and build dashboards in Tableau
 
 | # | Working title | Type | Modules | Board / artefact | Status |
 |---|---|---|---|---|---|
-| P1 | What dbt Charts is, and your first board | Tutorial + framing | 0, 1 | `m01_first_board.yml` | Drafting |
+| P1 | What dbt Charts is, and your first board | Tutorial + framing | 0, 1 | `m01_first_board.yml` | [Published 2026-09-22](https://medium.com/@imagineazhar/dashboards-as-code-part-1-getting-started-with-dbt-charts-7e80502b8acd) |
 | P2 | Sixteen chart types, and the shapes that aren't types | Tutorial | 2, 3 | `m02`, `m03` | Not started |
 | P3 | Laying out a board: rows, cols, tabs, grid | Tutorial | 4 | `m04_layouts.yml` | Not started |
 | P4 | Filters you can read: variables wired into SQL | Tutorial | 5 | `m05_filters.yml` | Not started |
@@ -60,7 +60,7 @@ something belongs in the repo or in a later post.
 
 ## Distribution
 
-Long form on The Insight Floor and imagineazhar.com. Code in this repo, public on GitHub, tagged per post (`p1`, `p2` …). Short cuts per post for LinkedIn, drawn from the log entries and renders. Carousel candidates: P2 (chart recipe table), P5 (five themes side by side), P8 (PR diff).
+Long form on Medium. The plan had been The Insight Floor and imagineazhar.com; P1 went to Medium instead. Code in this repo, public on GitHub, tagged per post (`p1`, `p2` …). Short cuts per post for LinkedIn, drawn from the log entries and renders. Carousel candidates: P2 (chart recipe table), P5 (five themes side by side), P8 (PR diff).
 
 ## Open decisions
 
