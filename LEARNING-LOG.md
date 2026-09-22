@@ -19,6 +19,33 @@ Post material:
 
 ---
 
+## 2026-09-22 · dct 0.8.0 · Titles are title-cased, so the file is not what ships
+
+Did: rendered `boards/first.yml` to PNG and `boards/m01_first_board.yml` to
+SVG, then read the SVG's text nodes against the YAML that produced them.
+
+Surprised me: every title comes out re-cased. `title: "Orders per week"`
+renders as "Orders per Week", `"Orders by status"` as "Orders by Status", and
+the board title `"Module 1: first board on jaffle shop"` as "Module 1: First
+Board on Jaffle Shop". It is headline casing rather than naive capitalisation —
+`per`, `by` and `on` all stay lowercase. Data is untouched: the status values
+(`completed`, `placed`, `shipped`, `returned`, `return_pending`) render exactly
+as the column holds them. The string I wrote survives on the SVG root as
+`data-dbt-page-title`, so the original is kept and then overridden for display.
+
+Changed my understanding: the board file is the deliverable, but it is not
+literally what a reader sees. dct owns the presentation of the strings in it,
+which means wording chosen in the YAML cannot be assumed to reach the canvas
+intact — and a post that prints the YAML above the render is printing two
+things that disagree. Not tested: whether the casing belongs to the default
+theme or applies under all five, and whether it can be turned off. That is a
+module 6 question.
+
+Post material: P1 prints the minimal board and shows its render directly below,
+where "week" becomes "Week" in plain sight. Either explain it there or choose a
+title that is already in headline case. The wider point — the tool rewrites the
+text you give it — belongs in P5 alongside themes.
+
 ## 2026-09-21 · dct 0.8.0 · A board's text block is part of the board
 
 Did: removed a line from the first board's text block that pointed at a file in
