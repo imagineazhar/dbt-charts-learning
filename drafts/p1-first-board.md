@@ -4,7 +4,9 @@ series: Dashboards as code, learned in public
 part: P1
 dct_version: 0.8.0
 board: https://github.com/imagineazhar/dbt-charts-learning/blob/p1/boards/m01_first_board.yml
-status: drafting
+status: published
+published: 2026-09-22
+url: https://medium.com/@imagineazhar/dashboards-as-code-part-1-getting-started-with-dbt-charts-7e80502b8acd
 ---
 
 _Written against dct 0.8.0. The syntax changes before 1.0, so check the version before copying code._

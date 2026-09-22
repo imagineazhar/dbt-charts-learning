@@ -10,8 +10,8 @@ Written against `dct` 0.8.0. Anything marked "planned" upstream is excluded unti
 
 | # | Module | Board | Post | Status |
 |---|---|---|---|---|
-| 0 | Orientation and setup | `guide.yml` (generated) | P1 | Not started |
-| 1 | Board anatomy | `m01_first_board.yml` | P1 | Board drafted |
+| 0 | Orientation and setup | `guide.yml` (generated) | P1 | Post published |
+| 1 | Board anatomy | `m01_first_board.yml` | P1 | Post published |
 | 2 | Chart families | `m02_chart_families.yml` | P2 | Not started |
 | 3 | Encodings and axes | `m03_encodings.yml` | P2 | Not started |
 | 4 | Layout | `m04_layouts.yml` | P3 | Not started |
