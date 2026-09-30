@@ -19,6 +19,73 @@ Post material:
 
 ---
 
+## 2026-09-30 · dct 0.8.0 · The same data as a line and as an area says two things
+
+Did: added `revenue_line` and `revenue_area` to `boards/m02_chart_families.yml`,
+both off one weekly-revenue query, and replaced the `tabs:` layout with a
+24-column `grid:` holding all 13 charts.
+
+Surprised me: the line's value axis has no `$0` (lowest label `$100`), and the
+area's starts at `$0`. Nothing in the YAML differs but `type:`. In the grid, the
+pie and donut, a third of the width, showed a legend below instead of labels
+around the slices, which I never set.
+
+Changed my understanding: a chart's axis range is a default the tool picks for
+that mark, not a property of the data. Switching `line` to `area` changes what
+the reader sees without touching the SQL, so the choice belongs in the review.
+A grid is placement by number (`col`, `row`, `width`), and it sizes rows to
+their contents when no `height` is given.
+
+Post material: line-to-area as a one-word change with two different readings,
+and the grid render as the payoff for the whole post.
+
+---
+
+## 2026-09-30 · dct 0.8.0 · A donut is a pie with `inner_radius`, and it totals itself
+
+Did: added `payment_pie` to `boards/m02_chart_families.yml` and rendered a solid
+`type: pie`, a `type: pie` with `style.inner_radius: 0.6`, and a bare
+`type: donut`, then compared the last two as SVG.
+
+Surprised me: the number in the hole appears without `total:`. dct sums the
+`theta` column and labels it after the column (`Total Amount`). `total:` only
+renames it. I had written the opposite in the draft.
+
+Changed my understanding: `donut` really is an alias, not a separate chart. The
+two SVGs matched apart from the render timestamp. "Convert a pie to a donut" is
+one style key, or one word in `type:`.
+
+Post material: the pie-then-hole progression in P2, and the correction itself: a
+claim I had read as documented turned out wrong once I looked at the render.
+
+---
+
+## 2026-09-29 · dct 0.8.0 · A table column's currency format only reaches row one
+
+Did: built `boards/m02_chart_families.yml` (module 2), rendered every tab, and
+read the SVG text nodes for the top-customers table after setting
+`style.columns.customer_lifetime_value.format: currency_whole`.
+
+Surprised me: the `$` only shows up on the first data row. Every row after it
+renders as a bare number. Confirmed in the SVG, not just the PNG: row one's
+cell holds two `<tspan>`s (`$`, then `99`); every other row's cell holds one
+(`65`, `64`, `57`, …) with no `$` anywhere in the markup. Also hit
+`WARN-LIKELY-CURRENCY-OR-PERCENT-MISSING-FORMATTER` for the first time — dct
+reads a column's name, guesses it's money or a percent, and flags a chart
+whose axis format doesn't match. Adding `style.number_format: currency_whole`
+cleared it on bar and scatter charts, where the same format applied to every
+point, not just the first.
+
+Changed my understanding: a chart type's minimal cheatsheet example passing
+doesn't mean every field of that shape formats correctly at every row —
+`table` needs checking per row, not per chart. Also confirmed the "named
+shapes" table in `dct docs charts` at face value: stacked bar, horizontal bar
+and a plain column chart are the same `type: bar` with different `style:`
+keys, nothing more, no separate type.
+
+Post material: the table row-one formatting bug (SVG evidence), and the
+currency/percent formatter warning, both for P2.
+
 ## 2026-09-22 · dct 0.8.0 · Titles are title-cased, so the file is not what ships
 
 Did: rendered `boards/first.yml` to PNG and `boards/m01_first_board.yml` to
