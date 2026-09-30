@@ -19,8 +19,8 @@ Primary: analytics engineers who already use dbt and build dashboards in Tableau
 | # | Working title | Type | Modules | Board / artefact | Status |
 |---|---|---|---|---|---|
 | P1 | What dbt Charts is, and your first board | Tutorial + framing | 0, 1 | `m01_first_board.yml` | [Published 2026-09-22](https://medium.com/@imagineazhar/dashboards-as-code-part-1-getting-started-with-dbt-charts-7e80502b8acd) |
-| P2 | Sixteen chart types, and the shapes that aren't types | Tutorial | 2, 3 | `m02`, `m03` | Not started |
-| P3 | Laying out a board: rows, cols, tabs, grid | Tutorial | 4 | `m04_layouts.yml` | Not started |
+| P2 | Nine chart types, one at a time | Tutorial | 2, 3 | `m02`, `m03` | Drafting (chart types only, layout is P3; module 2 only, module 3 not built) |
+| P3 | Laying out a board: rows, cols, tabs, grid | Tutorial | 4 | `m04_layouts.yml` | Not started. The first layout post: P2 shows a finished board but does not explain how it is laid out. |
 | P4 | Filters you can read: variables wired into SQL | Tutorial | 5 | `m05_filters.yml` | Not started |
 | P5 | Encoding a house style in `meta.yml` | Tutorial + opinion | 6 | `m06_house_style.yml`, 5 theme renders | Not started |
 | P6 | Layers, small multiples, and the first chart I couldn't build | Tutorial + limits | 7 | `m07_composition.yml` | Not started |

@@ -12,7 +12,7 @@ Written against `dct` 0.8.0. Anything marked "planned" upstream is excluded unti
 |---|---|---|---|---|
 | 0 | Orientation and setup | `guide.yml` (generated) | P1 | Post published |
 | 1 | Board anatomy | `m01_first_board.yml` | P1 | Post published |
-| 2 | Chart families | `m02_chart_families.yml` | P2 | Not started |
+| 2 | Chart families | `m02_chart_families.yml` | P2 | Board built |
 | 3 | Encodings and axes | `m03_encodings.yml` | P2 | Not started |
 | 4 | Layout | `m04_layouts.yml` | P3 | Not started |
 | 5 | Variables and filters | `m05_filters.yml` | P4 | Not started |
@@ -50,7 +50,7 @@ Read: Charts → Overview, then Bar, Line, Area, Point, Sector, Tables and Text.
 
 The 16 authorable types in 0.8.0: `bar`, `line`, `area`, `scatter`, `pie`, `donut`, `kpi`, `table`, `histogram`, `heatmap`, `geoshape`, `map`, `point_map`, `bubble_map`, `spark_bar`, `callout`.
 
-Exercise: one board with a tab per family, all on jaffle data. Order amount histogram, payment method mix as bar and as donut, customer lifetime value vs number of orders as scatter, a KPI row, a table of top customers. Build a stacked bar and a horizontal bar without a `type:` of their own (they are style options on `bar`).
+Exercise: one board with every chart on it, all on jaffle data. Order amount histogram, payment method mix as bar, as pie and as donut, weekly revenue as line and as area, customer lifetime value vs number of orders as scatter, a KPI row, a table of top customers. Build a stacked bar and a horizontal bar without a `type:` of their own (they are style options on `bar`). Layout is not the subject here: place the charts however is quickest and leave how layouts work to module 4.
 
 Capture: the "named shapes that have no `type:`" table in `dct docs charts`. Stacked, grouped, 100%, lollipop, bullet, slope, bump and dot plot are recipes composed from the base types. Guessing `type: bullet` returns an error that names the recipe. That error design is worth a paragraph. Skip the geographic types here (see data ceiling below).
 

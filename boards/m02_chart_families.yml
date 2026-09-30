@@ -1,0 +1,257 @@
+title: "Module 2: chart families"
+
+queries:
+  order_amounts:
+    sql: |
+      SELECT amount
+      FROM {{ ref('orders') }}
+      WHERE amount IS NOT NULL
+    source: jaffle
+
+  payment_mix:
+    sql: |
+      SELECT payment_method, SUM(amount) AS total_amount
+      FROM {{ ref('stg_payments') }}
+      GROUP BY 1
+      ORDER BY 2 DESC
+    source: jaffle
+
+  orders_by_week_status:
+    sql: |
+      SELECT date_trunc('week', order_date) AS week,
+             status,
+             COUNT(*) AS orders
+      FROM {{ ref('orders') }}
+      WHERE order_date < (SELECT date_trunc('week', MAX(order_date)) FROM {{ ref('orders') }})
+      GROUP BY 1, 2
+      ORDER BY 1
+    source: jaffle
+
+  revenue_by_week:
+    sql: |
+      SELECT date_trunc('week', order_date) AS week,
+             SUM(amount) AS revenue
+      FROM {{ ref('orders') }}
+      WHERE order_date < (SELECT date_trunc('week', MAX(order_date)) FROM {{ ref('orders') }})
+      GROUP BY 1
+      ORDER BY 1
+    source: jaffle
+
+  customer_value:
+    sql: |
+      SELECT number_of_orders, customer_lifetime_value
+      FROM {{ ref('customers') }}
+      WHERE customer_lifetime_value IS NOT NULL
+    source: jaffle
+
+  order_summary:
+    sql: |
+      SELECT COUNT(*) AS total_orders,
+             SUM(amount) AS total_revenue,
+             COUNT(DISTINCT customer_id) AS total_customers
+      FROM {{ ref('orders') }}
+    source: jaffle
+
+  top_customers:
+    sql: |
+      SELECT first_name || ' ' || last_name AS customer,
+             number_of_orders,
+             customer_lifetime_value
+      FROM {{ ref('customers') }}
+      WHERE customer_lifetime_value IS NOT NULL
+      ORDER BY customer_lifetime_value DESC
+      LIMIT 10
+    source: jaffle
+
+charts:
+  payment_bar:
+    query: payment_mix
+    type: bar
+    title: "Payment method mix"
+    x: payment_method
+    y: total_amount
+    style:
+      orientation: vertical
+      number_format: currency_whole
+      axis_y:
+        title:
+          visible: false
+        labels:
+          visible: false
+        ticks:
+          visible: false
+        line:
+          visible: false
+        grid:
+          visible: false
+      marks:
+        bar:
+          labels:
+            visible: true
+
+  weekly_status_stacked:
+    query: orders_by_week_status
+    type: bar
+    title: "Weekly orders, stacked by status"
+    x: week
+    y: orders
+    color: status
+    style:
+      stack: zero
+
+  top_customers_bar:
+    query: top_customers
+    type: bar
+    title: "Top 10 customers by lifetime value"
+    x: customer
+    y: customer_lifetime_value
+    style:
+      orientation: horizontal
+      number_format: currency_whole
+
+  payment_pie:
+    query: payment_mix
+    type: pie
+    title: "Payment method mix (pie)"
+    theta: total_amount
+    color: payment_method
+
+  payment_donut:
+    query: payment_mix
+    type: donut
+    title: "Payment method mix"
+    theta: total_amount
+    color: payment_method
+    total:
+      label: Total
+
+  revenue_line:
+    query: revenue_by_week
+    type: line
+    title: "Weekly revenue"
+    x: week
+    y: revenue
+    style:
+      number_format: currency_whole
+
+  revenue_area:
+    query: revenue_by_week
+    type: area
+    title: "Weekly revenue, filled"
+    x: week
+    y: revenue
+    style:
+      number_format: currency_whole
+
+  clv_scatter:
+    query: customer_value
+    type: scatter
+    title: "Lifetime value vs number of orders"
+    x: number_of_orders
+    y: customer_lifetime_value
+    style:
+      number_format: currency_whole
+
+  amount_histogram:
+    query: order_amounts
+    type: histogram
+    title: "Order amount distribution"
+    x: amount
+
+  kpi_orders:
+    query: order_summary
+    type: kpi
+    label: "Total orders"
+    value: total_orders
+
+  kpi_revenue:
+    query: order_summary
+    type: kpi
+    label: "Total revenue"
+    value: total_revenue
+    style:
+      value:
+        format: currency_whole
+
+  kpi_customers:
+    query: order_summary
+    type: kpi
+    label: "Total customers"
+    value: total_customers
+
+  top_customers_table:
+    query: top_customers
+    type: table
+    title: "Top 10 customers by lifetime value"
+    style:
+      columns:
+        customer:
+          label: Customer
+        number_of_orders:
+          label: Orders
+          align: right
+        customer_lifetime_value:
+          label: Lifetime value
+          format: currency_whole
+          align: right
+
+grid:
+  columns: 24
+  items:
+    - item: kpi_orders
+      col: 0
+      row: 0
+      width: 8
+    - item: kpi_revenue
+      col: 8
+      row: 0
+      width: 8
+    - item: kpi_customers
+      col: 16
+      row: 0
+      width: 8
+
+    - item: revenue_line
+      col: 0
+      row: 1
+      width: 12
+    - item: revenue_area
+      col: 12
+      row: 1
+      width: 12
+
+    - item: payment_bar
+      col: 0
+      row: 2
+      width: 8
+    - item: payment_pie
+      col: 8
+      row: 2
+      width: 8
+    - item: payment_donut
+      col: 16
+      row: 2
+      width: 8
+
+    - item: weekly_status_stacked
+      col: 0
+      row: 3
+      width: 12
+    - item: top_customers_bar
+      col: 12
+      row: 3
+      width: 12
+
+    - item: clv_scatter
+      col: 0
+      row: 4
+      width: 12
+    - item: amount_histogram
+      col: 12
+      row: 4
+      width: 12
+
+    - item: top_customers_table
+      col: 0
+      row: 5
+      width: 24
