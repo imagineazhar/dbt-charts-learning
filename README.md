@@ -52,7 +52,7 @@ Validate and render from inside `lab/jaffle_shop`:
 
 ```bash
 dct validate charts/lessons/
-dct render charts/lessons/m01_first_board.yml --format png --output ../../assets/renders/m01_first_board.png
+dct render charts/lessons/m01_first_board.yml --format png --output ../../assets/renders/m01/m01_first_board.png
 ```
 
 ## Structure
@@ -66,7 +66,8 @@ setup.sh           Rebuilds the lab from scratch
 boards/            Lesson boards (m01_*.yml, m02_*.yml …), tracked in git
 notes/             One note per module, written while working
 drafts/            Post drafts, one file per post
-assets/renders/    PNG/SVG exports used in posts
+assets/renders/    PNG/SVG exports used in posts; one mNN/ folder per module
+  mNN/experiments/ renders kept from a module's trials, not used in posts
 lab/               Disposable dbt + DuckDB project (git-ignored)
 ```
 

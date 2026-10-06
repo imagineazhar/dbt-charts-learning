@@ -15,7 +15,7 @@ _Written against dct 0.8.0. The syntax changes before 1.0, so check the version 
 
 **Who this is for:** you use dbt, you build dashboards somewhere else, and you are curious whether this is worth your time. I assume SQL and dbt. I explain YAML only where dbt Charts does something unusual with it.
 
-![A board with two charts: weekly orders as a line, orders by status as a bar](../assets/renders/m01_first_board.png)
+![A board with two charts: weekly orders as a line, orders by status as a bar](../assets/renders/m01/m01_first_board.png)
 
 What dbt Charts is
 ------------------
@@ -246,7 +246,7 @@ One wrinkle specific to this lab: `setup.sh` links `boards/` into the project as
 
 ```bash
 cat ../../boards/m01_first_board.yml \
-  | dct render - --format png --output ../../assets/renders/m01_first_board.png
+  | dct render - --format png --output ../../assets/renders/m01/m01_first_board.png
 ```
 
 `dct validate` and `dct serve` both follow the link without complaint; only `render` minds. `TROUBLESHOOTING.md` has the detail.

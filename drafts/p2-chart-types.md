@@ -12,7 +12,7 @@ _Written against dct 0.8.0. The syntax changes before 1.0, so check the version 
 
 Post 1 gave you a line and a bar. A real dashboard needs different types of charts. This post builds nine, one at a time: bar, pie, donut, line, area, scatter, histogram, KPI and table.
 
-![The finished board: a KPI row, weekly revenue as a line and an area, the bar, pie and donut, the stacked bar and the top-customers bar, the scatter and the histogram, and the table](../assets/renders/m02_chart_families_grid.png)
+![The finished board: a KPI row, weekly revenue as a line and an area, the bar, pie and donut, the stacked bar and the top-customers bar, the scatter and the histogram, and the table](../assets/renders/m02/m02_chart_families_grid.png)
 
 This is what one row of the query has to be:
 
@@ -55,7 +55,7 @@ charts:
 
 One row per bar. `x` is the category, `y` is the number. That is the whole chart. Here is what it draws:
 
-![A horizontal bar chart of payment totals by method, drawn with only x and y set](../assets/renders/m02_chart_families_bar_minimal.png)
+![A horizontal bar chart of payment totals by method, drawn with only x and y set](../assets/renders/m02/m02_chart_families_bar_minimal.png)
 
 I did not say orientation, a bar with a text category on `x` is horizontal by default. The value axis runs along the bottom.
 
@@ -68,7 +68,7 @@ I want columns, so I say so. Add one key under the chart:
       orientation: vertical
 ```
 
-![The same payment chart as vertical columns, with a value axis on the right](../assets/renders/m02_chart_families_bar_plain.png)
+![The same payment chart as vertical columns, with a value axis on the right](../assets/renders/m02/m02_chart_families_bar_plain.png)
 
 The category is still `x` and the number is still `y`. Only the direction changed. dct also moved the value axis to the right and drew gridlines. Those are defaults, and the next step removes them.
 
@@ -98,7 +98,7 @@ There is no single switch for the axis. It has five parts and you hide each one.
 
 `marks.bar.labels.visible: true` prints each value on its bar. The labels default to white text inside the top of the bar and pick up `number_format`, so they read `$871`.
 
-![The payment chart with dollar labels on the bars and no value axis](../assets/renders/m02_chart_families_bar.png)
+![The payment chart with dollar labels on the bars and no value axis](../assets/renders/m02/m02_chart_families_bar.png)
 
 ### Turn it sideways on purpose
 
@@ -131,7 +131,7 @@ charts:
 
 `x` and `y` are unchanged: the category, then the number. `orientation: horizontal` makes the intent visible to the next person reading the file.
 
-![A horizontal bar chart of the ten highest-value customers, largest at the top, with a dollar axis along the bottom](../assets/renders/m02_chart_families_bar_horizontal.png)
+![A horizontal bar chart of the ten highest-value customers, largest at the top, with a dollar axis along the bottom](../assets/renders/m02/m02_chart_families_bar_horizontal.png)
 
 The largest customer is at the top because the query says `ORDER BY ... DESC`. The chart draws rows in the order it receives them. The value axis, `axis_y`, is drawn along the bottom and reads `$0`, `$50`, `$100` because of `number_format`.
 
@@ -152,7 +152,7 @@ Orientation was one key that changed how a bar looks. `stack` is another. Add a 
 
 The query returns one row per week and status. `color` splits the bars by status. `stack: zero` piles them up from zero.
 
-![Weekly orders as stacked bars, split by order status, with status names labelled at the right](../assets/renders/m02_chart_families_bar_stacked.png)
+![Weekly orders as stacked bars, split by order status, with status names labelled at the right](../assets/renders/m02/m02_chart_families_bar_stacked.png)
 
 dct labels the colours at the right edge instead of drawing a legend box (not the best choice as it reads as an axis).
 
@@ -171,7 +171,7 @@ This is the point of the section. "Stacked bar" and "horizontal bar" are not cha
 
 Same query as the bar, one row per slice. A pie swaps `x` and `y` for `theta`, the angle each slice takes, and `color`, which names the slices.
 
-![A pie chart of payment methods: credit card 52%, bank transfer 25%, gift card 12%, coupon 11%](../assets/renders/m02_chart_families_pie.png)
+![A pie chart of payment methods: credit card 52%, bank transfer 25%, gift card 12%, coupon 11%](../assets/renders/m02/m02_chart_families_pie.png)
 
 I set no labels. Each slice still reads percentage, name and value.
 
@@ -186,7 +186,7 @@ To turn the pie into a donut, add one key:
 
 `inner_radius` is the size of the hole as a share of the pie's radius. The docs give a range of 0 to 1, where 0 is a solid pie. I only tried 0.6.
 
-![The payment pie with a hole in the middle, holding 1,672 above the words Total Amount](../assets/renders/m02_chart_families_pie_hole.png)
+![The payment pie with a hole in the middle, holding 1,672 above the words Total Amount](../assets/renders/m02/m02_chart_families_pie_hole.png)
 
 Two things happened. The hole opened, and a number appeared in it: the sum of `total_amount`, labelled Total Amount after the column. I asked for neither.
 
@@ -212,7 +212,7 @@ Here is the finished donut:
       label: Total
 ```
 
-![A donut chart of payment methods with a centred total of 1,672](../assets/renders/m02_chart_families_donut.png)
+![A donut chart of payment methods with a centred total of 1,672](../assets/renders/m02/m02_chart_families_donut.png)
 
 That donut took eight lines of chart YAML. The percentages, the slice labels and the centred total came free. Not every chart type is that generous, and the differences are the useful part.
 
@@ -245,7 +245,7 @@ One row per point. `x` is the date and `y` is the number, exactly as on a bar, w
 
 The `WHERE` line drops the final week. The data stops part-way through it, so it holds only a fraction of a week's orders. Dropping it in the SQL keeps the fix where a reviewer can see it and disagree.
 
-![A line chart of weekly revenue from January to late March 2018, with a dot on each week](../assets/renders/m02_chart_families_line.png)
+![A line chart of weekly revenue from January to late March 2018, with a dot on each week](../assets/renders/m02/m02_chart_families_line.png)
 
 Look at the value axis. Its lowest label is $100, and there is no $0. The axis does not start at zero. Nothing in the YAML says so. dct chose the range to fit the data.
 
@@ -266,7 +266,7 @@ Change one word:
 
 Same query, same `x` and `y`.
 
-![An area chart of weekly revenue, filled down to a $0 baseline](../assets/renders/m02_chart_families_area.png)
+![An area chart of weekly revenue, filled down to a $0 baseline](../assets/renders/m02/m02_chart_families_area.png)
 
 The axis now starts at $0. The line's did not. On the line your eye follows the swings. On the area it reads the height of the whole shape, so a zero baseline matters. Choose by the question you are answering.
 
@@ -294,7 +294,7 @@ charts:
 
 The query returns one row per customer, not a summary. Scatter is the first chart here that wants row-level data.
 
-![A scatter of customer lifetime value against order count, with dots stacked in vertical columns at 1, 2, 3 and 5 orders](../assets/renders/m02_chart_families_scatter.png)
+![A scatter of customer lifetime value against order count, with dots stacked in vertical columns at 1, 2, 3 and 5 orders](../assets/renders/m02/m02_chart_families_scatter.png)
 
 Order count is a whole number, so the dots line up in columns and the chart reads more like a strip plot. It is still worth having: the single dot at three orders and $99 stands apart. The docs list `color:` and `size:` for a third and fourth variable. Untested here.
 
@@ -319,7 +319,7 @@ charts:
 
 This is the odd one. The query returns raw rows, one per order, and the chart does the binning. There is no `y`-axis. dct chose ten-dollar bins and counted them.
 
-![A histogram of order amounts in ten-dollar bins, peaking at 34 orders between $20 and $30, with no orders between $40 and $50](../assets/renders/m02_chart_families_histogram.png)
+![A histogram of order amounts in ten-dollar bins, peaking at 34 orders between $20 and $30, with no orders between $40 and $50](../assets/renders/m02/m02_chart_families_histogram.png)
 
 The vertical axis is titled Count. You did not ask for it. dct added it because the chart is counting rows.
 
@@ -352,7 +352,7 @@ A KPI needs exactly one row. `value:` is a bare column name, never `SUM(...)`. T
 
 Two details differ from every other chart. The header is `label:`, and `title:` is rejected. The number format lives at `style.value.format`, not `number_format`.
 
-![Three KPI tiles: 99 orders, $1,672 revenue, 62 customers](../assets/renders/m02_chart_families_kpi.png)
+![Three KPI tiles: 99 orders, $1,672 revenue, 62 customers](../assets/renders/m02/m02_chart_families_kpi.png)
 
 ## Table: every column, in query order
 
@@ -376,7 +376,7 @@ Two details differ from every other chart. The header is `label:`, and `title:` 
 
 A table shows every column the query returns, in the order it returns them. `style.columns` only styles.
 
-![A table of the top ten customers with columns Customer, Orders and Lifetime value](../assets/renders/m02_chart_families_table.png)
+![A table of the top ten customers with columns Customer, Orders and Lifetime value](../assets/renders/m02/m02_chart_families_table.png)
 
 ## Where it falls short
 

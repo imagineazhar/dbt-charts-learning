@@ -42,7 +42,7 @@ every chart on the page (see "Line, area and grid" below). The charts are:
   alignment and a `currency_whole` format on the value column.
 
 Each chart was rendered on its own with `--chart <id>` to
-`assets/renders/m02_chart_families_<name>.png`, and the whole board once to
+`assets/renders/m02/m02_chart_families_<name>.png`, and the whole board once to
 `m02_chart_families_grid.png`. (While the board used tabs, each tab was
 rendered with `--var family=<tab>` instead, since a static render only ever
 captures the tab marked `default:`. `m02_chart_families.png` is the old

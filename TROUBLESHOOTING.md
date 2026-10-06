@@ -56,7 +56,7 @@ Render by piping the board in instead:
 ```bash
 cd lab/jaffle_shop
 cat ../../boards/m01_first_board.yml \
-  | dct render - --format png --output ../../assets/renders/m01_first_board.png
+  | dct render - --format png --output ../../assets/renders/m01/m01_first_board.png
 ```
 
 Raise with upstream before deciding whether to stop linking and copy instead.

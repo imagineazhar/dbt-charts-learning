@@ -28,7 +28,7 @@ to the YAML the post prints.
 
 `boards/m01_first_board.yml` — two queries against `ref('orders')`, a line and
 a bar side by side, under a `text:` block. Rendered to
-`assets/renders/m01_first_board.png`.
+`assets/renders/m01/m01_first_board.png`.
 
 A board is one YAML file that renders as one page, holding four kinds of thing:
 `queries:` (named SQL, one result set each), `charts:` (named charts, each
