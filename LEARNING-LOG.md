@@ -19,6 +19,30 @@ Post material:
 
 ---
 
+## 2026-10-06 · dct 0.8.0 · The data-dependent errors only appear at render
+
+Did: built `boards/m03_encodings.yml` (weekly orders split by status, and
+customer lifetime value ranked on a log axis), then triggered three errors on
+throwaway boards: `yearmonth` on a weekly query, a number format on a date
+axis, and a zero under a log scale.
+
+Surprised me: `dct validate` passed all three boards. Each error came only from
+`dct render`, because each depends on the data or on the axis's data type, which
+validate does not read. The docs name the log-scale code
+`ERR-LOG-SCALE-POSITIVE-DATA`. The real code is
+`ERR-LOG-SCALE-REQUIRES-POSITIVE-DATA`. A hex code in `style.color.static` and
+in `style.palette` raised no error, and neither colour reached the SVG.
+
+Changed my understanding: a board that validates clean is not a board that
+renders. Validate checks the YAML and the names; render checks the YAML against
+the rows. The chart still never aggregates: `yearmonth` on weekly rows is
+refused, not merged, and the fix is a monthly query.
+
+Post material: the three render-time messages quoted in full, and "validate
+passed" as the setup for each.
+
+---
+
 ## 2026-09-30 · dct 0.8.0 · The same data as a line and as an area says two things
 
 Did: added `revenue_line` and `revenue_area` to `boards/m02_chart_families.yml`,

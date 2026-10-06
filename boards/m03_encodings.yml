@@ -1,0 +1,56 @@
+title: "M03: Encodings"
+
+queries:
+  orders_by_week_status:
+    sql: |
+      SELECT date_trunc('week', order_date) AS week,
+             status,
+             COUNT(*) AS orders
+      FROM {{ ref('orders') }}
+      WHERE order_date < (SELECT date_trunc('week', MAX(order_date)) FROM {{ ref('orders') }})
+      GROUP BY 1, 2
+      ORDER BY 1
+    source: jaffle
+
+  customer_value_rank:
+    sql: |
+      SELECT ROW_NUMBER() OVER (ORDER BY customer_lifetime_value DESC) AS customer_rank,
+             customer_lifetime_value
+      FROM {{ ref('customers') }}
+      WHERE customer_lifetime_value IS NOT NULL
+      ORDER BY 1
+    source: jaffle
+
+charts:
+  weekly_orders_by_status:
+    type: line
+    query: orders_by_week_status
+    title: "Weekly orders by status"
+    x: week
+    x_label: "Week"
+    y: orders
+    color: status
+    style:
+      axis_x:
+        time_unit: yearweek
+        labels:
+          format: "%b %d"
+
+  cltv_log:
+    type: line
+    query: customer_value_rank
+    title: "Customer lifetime value, ranked"
+    x: customer_rank
+    x_label: "Customer rank"
+    y: customer_lifetime_value
+    style:
+      axis_y:
+        labels:
+          format: "$,.0f"
+        scale:
+          continuous:
+            type: log
+
+rows:
+  - weekly_orders_by_status
+  - cltv_log
