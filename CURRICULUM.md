@@ -116,7 +116,7 @@ Capture: the PR diff of a dashboard change, as a screenshot. This module carries
 
 Read: `dct` CLI → skills, AI assistants, mcp. Run `dct skills`.
 
-Exercise: give a coding agent (Claude Code) the jaffle lab and one plain-language request. Keep the full transcript. Compare its board with the one you built by hand for the same question: correctness, readability, what you had to correct.
+Exercise: give a coding agent the jaffle lab and one plain-language request. Keep the full transcript. Compare its board with the one you built by hand for the same question: correctness, readability, what you had to correct.
 
 Capture: the transcript, the diff between the two boards, the corrections. Hold off on conclusions until the diff is in front of you.
 
